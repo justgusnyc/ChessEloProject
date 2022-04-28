@@ -1,4 +1,4 @@
-package ChessEloProject.chess;
+package chess;
 
 public class MatchingAlgo {
 

@@ -1,4 +1,4 @@
-package ChessEloProject.chess;
+package chess;
 
 import java.util.HashMap;
 import java.util.Map;
