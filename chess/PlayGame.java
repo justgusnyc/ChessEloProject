@@ -1,4 +1,4 @@
-package chess;
+package ChessEloProject.chess;
 
 public class PlayGame {
     

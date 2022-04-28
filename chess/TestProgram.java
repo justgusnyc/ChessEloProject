@@ -1,6 +1,4 @@
-package chess;
-
-import chess.Players.Bracket;
+package ChessEloProject.chess;
 
 public class TestProgram{
     
