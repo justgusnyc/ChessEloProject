@@ -24,7 +24,7 @@ public class TestProgram{
         System.out.println(beg.getValue());
         System.out.println(Bracket.lookup(G.getElo()));
         System.out.println(Bracket.lookup(C.getElo()));
-        System.out.println(MA.optimalMatch(G));
+        System.out.println("Optimal First Match for Gus player: "+ MA.optimalMatch(G));
 
 
         
