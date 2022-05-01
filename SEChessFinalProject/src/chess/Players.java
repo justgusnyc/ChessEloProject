@@ -1,27 +1,23 @@
 package chess;
 
+import java.security.KeyStore.Entry;
 import java.util.HashMap;
 import java.util.Map;
 
 
-public class Players {
+public class Players extends ACPlayer{
     private int elo;
     private String name;
-    Map<String, Integer> eloNames = new HashMap<>();
+    //Map<String, Integer> ELONAMES = new HashMap<>();
 
-    Players(int elo, String name){
-        if(name == null){
-            throw new IllegalArgumentException("Player must have a name");
-        }
-
-        this.elo = elo;
+    Players(String name, int elo){
+        super(name, elo);
         this.name = name;
-
-        eloNames.put(this.name, this.elo);
+        this.elo = elo;
     }
 
-    public void getNames(){
-        for(Map.Entry<String, Integer> entry : eloNames.entrySet()){
+    public void getPlayers(){
+        for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
             String n = entry.getKey();
             Integer el = entry.getValue();
             System.out.println("Name: "+n+ "\tValue: "+el);

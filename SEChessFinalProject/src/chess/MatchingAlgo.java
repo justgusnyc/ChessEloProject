@@ -1,6 +1,27 @@
 package chess;
 
-public class MatchingAlgo {
+import java.util.Map;
+
+import chess.Players.Bracket;
+
+public class MatchingAlgo extends ACPlayer{
+
+    MatchingAlgo(String name, int elo, Bracket b) {
+        super(name, elo);
+        
+    }
+
+    @Override
+    void getPlayers() {
+        for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
+            String n = entry.getKey();
+            Integer el = entry.getValue();
+            System.out.println("Name: "+n+ "\tValue: "+el);
+        }
+        
+    }
+
+
 
 
     // win = 1, lose = 0, draw = .5, if someone is slightly below you, maybe it would be .63 or something
@@ -21,6 +42,17 @@ public class MatchingAlgo {
     // Ex: USCF official K value for a 2100 rated player would be 21 instead, because at such
     // a high rating, because intense volatility is not fair as it is much harder to gain points
     // at a higher level than it is at a lower level iuiuh
+
+
+    public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB, int kScoreValue){
+        float percPlayerAWins = 1 / (1+10^((ratingPlayerB - ratingPlayerA)/400));
+        return percPlayerAWins;
+    }
+    
+    public int newRatingPlayerA(int currentElo, float expectedWinPercentage, float actualWinResult, int kScoreValue){
+        int newRating = currentElo + kScoreValue * (int)(actualWinResult - expectedWinPercentage);
+        return newRating;
+    }
 
     
 }
