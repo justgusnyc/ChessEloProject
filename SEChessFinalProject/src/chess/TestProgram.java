@@ -5,8 +5,12 @@ import chess.Players.Bracket;
 public class TestProgram{
     
     public static void main(String[] args) {
+        MatchingAlgo MA = new MatchingAlgo();
         Players G = new Players("Gus", 1000);
         Players C = new Players("Cesar", 1800);
+        Players V = new Players("Vish", 800);
+        Players N = new Players("Noah", 1000);
+        Players A = new Players("Arthur", 950);
     
         G.getPlayers();
         System.out.println("Buffr");
@@ -18,6 +22,11 @@ public class TestProgram{
 
         System.out.println(beg);
         System.out.println(beg.getValue());
+        System.out.println(Bracket.lookup(G.getElo()));
+        System.out.println(Bracket.lookup(C.getElo()));
+        System.out.println(MA.optimalMatch(G));
+
+
         
     }
 }

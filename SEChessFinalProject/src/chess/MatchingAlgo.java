@@ -1,23 +1,17 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
-import chess.Players.Bracket;
 
-public class MatchingAlgo extends ACPlayer{
 
-    MatchingAlgo(String name, int elo, Bracket b) {
-        super(name, elo);
-        
-    }
+public class MatchingAlgo{
 
-    @Override
-    void getPlayers() {
-        for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
-            String n = entry.getKey();
-            Integer el = entry.getValue();
-            System.out.println("Name: "+n+ "\tValue: "+el);
-        }
+
+
+    MatchingAlgo() {
         
     }
 
@@ -44,15 +38,64 @@ public class MatchingAlgo extends ACPlayer{
     // at a higher level than it is at a lower level iuiuh
 
 
-    public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB, int kScoreValue){
-        float percPlayerAWins = 1 / (1+10^((ratingPlayerB - ratingPlayerA)/400));
+    public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB){
+        float difference = Math.abs(ratingPlayerB - ratingPlayerA);
+        float power = difference/400;
+        float percPlayerAWins = (float) (1 / (1+(Math.pow(10,-power))));
         return percPlayerAWins;
     }
-    
-    public int newRatingPlayerA(int currentElo, float expectedWinPercentage, float actualWinResult, int kScoreValue){
-        int newRating = currentElo + kScoreValue * (int)(actualWinResult - expectedWinPercentage);
+
+    public int newPlayerRating(int currentElo, int kValue, float expectedWinPercentage, float actualWinPercentage){
+        int newRating = currentElo + kValue * (int)(actualWinPercentage - expectedWinPercentage);
         return newRating;
     }
+    
+    
+
+    public int getKScore(int currentElo){
+        if(currentElo >= 2400){
+            return 20;
+        }
+        return 30;
+    }
+
+    // not sure if I should return type string below and just return the name of the first best match
+    // or if i should return type Players and return an entire Player for the best match.
+    // Either way I would ideally like to have a list of "best matches" sorted for the person we are currently 
+    // searching for, so that if the first match does not work out it would just go to the next match and so on
+    // the issue with this is that then I may need to change the datastructure of scores below to a hashmap or 
+    // figure out a way to store a list inside of a list or something like that
+
+    public String optimalMatch(Players playerA){
+        List<Float> scores = new ArrayList<>(); 
+        for(Map.Entry<String, Integer> entry : ACPlayer.ELONAMES.entrySet()){
+
+            if(entry.getKey() == playerA.getName()){
+                continue;
+            }
+            else{
+                System.out.println("PlayerA Elo: "+playerA.getElo());
+                System.out.println("Entry Value: "+entry.getValue());
+                float currentPercentage = this.percPlayerAWin(playerA.getElo(), entry.getValue());
+                System.out.println("Current Percentage: "+currentPercentage);
+                scores.add(currentPercentage);
+                if(currentPercentage == 0.5){
+                    return entry.getKey();
+                }
+                else if(currentPercentage <= 0.63 && currentPercentage >= 0.38){
+                    return entry.getKey();
+                }
+                
+            }
+        }
+        Collections.sort(scores);
+        return "Error: No Match Found";
+        
+        
+
+    }
+
+
 
     
 }

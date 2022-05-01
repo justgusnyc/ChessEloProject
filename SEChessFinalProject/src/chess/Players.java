@@ -1,7 +1,7 @@
 package chess;
 
-import java.security.KeyStore.Entry;
-import java.util.HashMap;
+// import java.security.KeyStore.Entry;
+// import java.util.HashMap;
 import java.util.Map;
 
 
@@ -24,7 +24,30 @@ public class Players extends ACPlayer{
         }
     }
 
+    public int getElo(){
+        return this.elo;
+    }
 
+    public String getName(){
+        return this.name;
+    }
+
+
+
+    public void updateElo(int elo){
+        this.elo = elo;
+        ELONAMES.replace(this.name, this.elo);
+    }
+
+
+
+
+
+
+
+
+
+    
     public enum Bracket {
         
         BEGINNER(800),
