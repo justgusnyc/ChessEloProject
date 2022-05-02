@@ -34,9 +34,11 @@ public class Players extends ACPlayer{
 
 
 
-    public void updateElo(int elo){
-        this.elo = elo;
-        ELONAMES.replace(this.name, this.elo);
+    public void updateElo(int elo, String name){
+        if(name == this.name){
+            this.elo = elo;
+        }
+        ELONAMES.replace(name, elo);
     }
 
 

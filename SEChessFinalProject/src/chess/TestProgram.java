@@ -6,6 +6,7 @@ public class TestProgram{
     
     public static void main(String[] args) {
         MatchingAlgo MA = new MatchingAlgo();
+        PlayGame play = new PlayGame();
         Players G = new Players("Gus", 1000);
         Players C = new Players("Cesar", 1800);
         Players V = new Players("Vish", 800);
@@ -25,6 +26,10 @@ public class TestProgram{
         System.out.println(Bracket.lookup(G.getElo()));
         System.out.println(Bracket.lookup(C.getElo()));
         System.out.println("Optimal First Match for Gus player: "+ MA.optimalMatch(G));
+        play.beginGame(G);
+        V.getPlayers();
+
+        
 
 
         

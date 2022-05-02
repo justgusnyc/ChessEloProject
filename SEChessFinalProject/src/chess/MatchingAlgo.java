@@ -8,11 +8,11 @@ import java.util.Map;
 
 
 public class MatchingAlgo{
-
+    public float currentPercentage;
 
 
     MatchingAlgo() {
-        
+        this.currentPercentage = currentPercentage;
     }
 
 
@@ -41,12 +41,12 @@ public class MatchingAlgo{
     public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB){
         float difference = Math.abs(ratingPlayerB - ratingPlayerA);
         float power = difference/400;
-        float percPlayerAWins = (float) (1 / (1+(Math.pow(10,-power))));
-        return percPlayerAWins;
+        this.currentPercentage = (float) (1 / (1+(Math.pow(10,-power))));
+        return this.currentPercentage;
     }
 
     public int newPlayerRating(int currentElo, int kValue, float expectedWinPercentage, float actualWinPercentage){
-        int newRating = currentElo + kValue * (int)(actualWinPercentage - expectedWinPercentage);
+        int newRating = currentElo + (int)(kValue * (actualWinPercentage - expectedWinPercentage));
         return newRating;
     }
     
@@ -58,6 +58,7 @@ public class MatchingAlgo{
         }
         return 30;
     }
+
 
     // not sure if I should return type string below and just return the name of the first best match
     // or if i should return type Players and return an entire Player for the best match.
