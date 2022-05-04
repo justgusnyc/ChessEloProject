@@ -12,6 +12,7 @@ public class TestProgram{
         Players V = new Players("Vish", 800);
         Players N = new Players("Noah", 1000);
         Players A = new Players("Arthur", 950);
+        Players D = new Players("David", 2000);
     
         G.getPlayers();
         System.out.println("Buffr");

@@ -49,6 +49,10 @@ public class MatchingAlgo{
         int newRating = currentElo + (int)(kValue * (actualWinPercentage - expectedWinPercentage));
         return newRating;
     }
+
+    public int drawValue(int currentElo, int kValue, float expectedWinPercentage){
+        return 0;
+    }
     
     
 

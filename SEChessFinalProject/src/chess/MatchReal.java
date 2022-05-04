@@ -18,5 +18,6 @@ public class MatchReal {
     // - actually fill out stuff for this class:
     //      - this class needs to keep track of everything that happens during the PlayGame class, basically we need stats how many wins (currently) does each player have, if it was a tournament what would their scores be?
     //      - this will help complete the PlayGame class as well
+    // - define an interface for everything lmao 
     
 }
