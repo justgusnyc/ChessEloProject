@@ -5,7 +5,16 @@ public class MatchReal {
     // This is meant to encapsulate things about the match itself, and record what happens in the matches
 
     // right now some basic brackets are defined in the player class, but they should possibly be moved here
-
+	public void getPlayerStats(Players p){
+		int[] stats = p.getStats();
+		System.out.println("\nWins: " + stats[0] + " Losses: " + stats[1] + " Draws: " + stats[2] + "\n");
+	}
+	
+	public void getPlayers(Players p){
+		p.getPlayers();
+	}
+	
+	
 
     // TO-DO:
     // - make a function to calculate points to add for a draw, range should be from +- 0-3 points 
@@ -18,6 +27,5 @@ public class MatchReal {
     // - actually fill out stuff for this class:
     //      - this class needs to keep track of everything that happens during the PlayGame class, basically we need stats how many wins (currently) does each player have, if it was a tournament what would their scores be?
     //      - this will help complete the PlayGame class as well
-    // - define an interface for everything lmao 
     
 }
