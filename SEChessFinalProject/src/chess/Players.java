@@ -8,15 +8,17 @@ import java.util.Map;
 public class Players extends ACPlayer{
     private int elo;
     private String name;
+    private int[] stats;
     //Map<String, Integer> ELONAMES = new HashMap<>();
 
     Players(String name, int elo){
         super(name, elo);
         this.name = name;
         this.elo = elo;
+        this.stats = new int[3];
     }
 
-    public void getPlayers(){
+    public void getPlayers(){  //Maybe this funtion needs to be somewhere else?
         for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
             String n = entry.getKey();
             Integer el = entry.getValue();
@@ -30,6 +32,23 @@ public class Players extends ACPlayer{
 
     public String getName(){
         return this.name;
+    }
+    
+    public int[] getStats(){
+    	return this.stats;
+    }
+    
+    public void addMatchStat(int input){
+    	if(input == 1){
+    		this.stats[0]++;
+    	}else if(input == 2){
+    		this.stats[1]++;
+    	}else if(input == 3){
+    		this.stats[2]++;
+    	}else{
+    		System.out.println("Bruh");
+    	}
+    	
     }
 
 
