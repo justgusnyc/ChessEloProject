@@ -9,6 +9,7 @@ public class Players extends ACPlayer{
     private int elo;
     private String name;
     private int[] stats;
+    private PlayerStatus playerStatus;
     //Map<String, Integer> ELONAMES = new HashMap<>();
 
     Players(String name, int elo){
@@ -16,6 +17,7 @@ public class Players extends ACPlayer{
         this.name = name;
         this.elo = elo;
         this.stats = new int[3];
+        this.playerStatus = new PlayerStatus();
     }
 
     public void getPlayers(){  //Maybe this funtion needs to be somewhere else?
@@ -38,6 +40,13 @@ public class Players extends ACPlayer{
     	return this.stats;
     }
     
+    public PlayerStatus getStatus(){
+    	return this.playerStatus;
+    }
+
+    
+    
+    
     public void addMatchStat(int input){
     	if(input == 1){
     		this.stats[0]++;
@@ -50,7 +59,6 @@ public class Players extends ACPlayer{
     	}
     	
     }
-
 
 
     public void updateElo(int elo, String name){
