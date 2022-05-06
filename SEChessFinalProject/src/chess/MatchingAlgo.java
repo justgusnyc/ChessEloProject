@@ -35,7 +35,7 @@ public class MatchingAlgo{
     // for "K" instead
     // Ex: USCF official K value for a 2100 rated player would be 21 instead, because at such
     // a high rating, because intense volatility is not fair as it is much harder to gain points
-    // at a higher level than it is at a lower level iuiuh
+    // at a higher level than it is at a lower level
 
 
     public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB){
@@ -48,10 +48,6 @@ public class MatchingAlgo{
     public int newPlayerRating(int currentElo, int kValue, float expectedWinPercentage, float actualWinPercentage){
         int newRating = currentElo + (int)(kValue * (actualWinPercentage - expectedWinPercentage));
         return newRating;
-    }
-
-    public int drawValue(int currentElo, int kValue, float expectedWinPercentage){
-        return 0;
     }
     
     
@@ -71,15 +67,24 @@ public class MatchingAlgo{
     // the issue with this is that then I may need to change the datastructure of scores below to a hashmap or 
     // figure out a way to store a list inside of a list or something like that
 
-    public String optimalMatch(Players playerA){
+    public String optimalMatch(Players playerA, ArrayList<Players> players){
         List<Float> scores = new ArrayList<>(); 
         for(Map.Entry<String, Integer> entry : ACPlayer.ELONAMES.entrySet()){
 
+        	boolean enemyStatus = false;
+        	for (Players p : players){
+        		if(entry.getKey() == p.getName()){
+        			enemyStatus = p.getStatus().isInGame();
+        		}
+        	}
+        	
             if(entry.getKey() == playerA.getName()){
                 continue;
+            }else if (enemyStatus){
+            	continue;
             }
             else{
-                System.out.println("PlayerA Elo: "+playerA.getElo());
+                System.out.println("\nPlayerA Elo: "+playerA.getElo());
                 System.out.println("Entry Value: "+entry.getValue());
                 float currentPercentage = this.percPlayerAWin(playerA.getElo(), entry.getValue());
                 System.out.println("Current Percentage: "+currentPercentage);
@@ -87,7 +92,7 @@ public class MatchingAlgo{
                 if(currentPercentage == 0.5){
                     return entry.getKey();
                 }
-                else if(currentPercentage <= 0.63 && currentPercentage >= 0.38){
+                else if(true){				//TEMPORARY currentPercentage <= 0.63 && currentPercentage >= 0.38
                     return entry.getKey();
                 }
                 

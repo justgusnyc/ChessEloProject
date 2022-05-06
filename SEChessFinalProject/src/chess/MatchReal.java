@@ -1,14 +1,19 @@
 package chess;
 
+import java.util.ArrayList;
+
 public class MatchReal {
 
     // This is meant to encapsulate things about the match itself, and record what happens in the matches
 
     // right now some basic brackets are defined in the player class, but they should possibly be moved here
-	public void getPlayerStats(Players p){
-		int[] stats = p.getStats();
-		System.out.println("\nWins: " + stats[0] + " Losses: " + stats[1] + " Draws: " + stats[2] + "\n");
+	public void getPlayerStats(ArrayList<Players> players){
+		for(Players p : players){
+			int[] stats = p.getStats();
+			System.out.println(p.getName() + "\nWins: " + stats[0] + " Losses: " + stats[1] + " Draws: " + stats[2] + "\n");
+		}
 	}
+		
 	
 	public void getPlayers(Players p){
 		p.getPlayers();
