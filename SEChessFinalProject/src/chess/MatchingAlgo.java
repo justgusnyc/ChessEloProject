@@ -1,9 +1,9 @@
 package chess;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 
@@ -73,28 +73,30 @@ public class MatchingAlgo{
 
     public String optimalMatch(Players playerA){
         List<Float> scores = new ArrayList<>(); 
-        for(Map.Entry<String, Integer> entry : ACPlayer.ELONAMES.entrySet()){
 
-            if(entry.getKey() == playerA.getName()){
+        for(Players p : MatchReal.ALLPLAYERS){
+            
+
+            if(p == playerA){
                 continue;
             }
             else{
                 System.out.println("PlayerA Elo: "+playerA.getElo());
-                System.out.println("PlayerB Value: "+entry.getValue());
-                float currentPercentage = this.percPlayerAWin(playerA.getElo(), entry.getValue());
+                System.out.println("PlayerB Value: "+p.getElo());
+                float currentPercentage = this.percPlayerAWin(playerA.getElo(), p.getElo());
                 System.out.println("Current Percentage: "+currentPercentage);
                 scores.add(currentPercentage);
                 if(currentPercentage == 0.5){
-                    return entry.getKey();
+                    return p.getName();
                 }
                 else if(currentPercentage <= 0.63 && currentPercentage >= 0.38){
-                    return entry.getKey();
+                    return p.getName();
                 }
                 
             }
         }
-        Collections.sort(scores);
-        return "Error: No Match Found";
+        int x1 = ThreadLocalRandom.current().nextInt(0, MatchReal.ALLPLAYERS.size());
+        return MatchReal.ALLPLAYERS.get(x1).getName();
         
         
 

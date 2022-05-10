@@ -72,9 +72,17 @@ public class Players extends ACPlayer{
     		int v = s.get(2);
             s.add(2, v+1);
     	}else{
-    		System.out.println("Bruh"); // lmao
+    		System.out.println("Invalid input");
     	}
     	
+    }
+
+    public void remove(){
+        for(Players p:MatchReal.ALLPLAYERS){
+            if(this.name == p.getName()){
+                MatchReal.ALLPLAYERS.remove(p);   
+            }
+        }
     }
 
 

@@ -11,18 +11,21 @@ public class MatchReal {
 
     // right now some basic brackets are defined in the player class, but they should possibly be moved here
 	public List<Integer> getPlayerStats(Players p){
-		return p.getCurrentPlayerStats(p);
+		return p.getCurrentPlayerStats(p); 
 	}
 	
     public void addPlayerToTournament(Players p){
         ALLPLAYERS.add(p);
     }
-    public void removePlayerFromTournament(String name){
+    
+
+    public Players getPlayer(String name){
         for(Players p:ALLPLAYERS){
             if(p.getName() == name){
-                ALLPLAYERS.remove(p);   
+                return p;
             }
         }
+        return null;
     }
 
 	public void getPlayerStatus(){
@@ -52,6 +55,8 @@ public class MatchReal {
 
         
     }
+
+
 
 	
 	

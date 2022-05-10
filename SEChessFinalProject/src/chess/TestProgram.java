@@ -11,6 +11,7 @@ public class TestProgram{
         PlayGame play = new PlayGame();
         MatchReal match = new MatchReal();
         Players G = new Players("Gus", 1000);
+        Players J = new Players("Jerry", 1850);
         Players C = new Players("Cesar", 1800);
         Players V = new Players("Vish", 800);
         Players N = new Players("Noah", 1000);
@@ -22,6 +23,9 @@ public class TestProgram{
         match.addPlayerToTournament(N);
         match.addPlayerToTournament(A);
         match.addPlayerToTournament(D);
+        match.addPlayerToTournament(J);
+
+
     
         G.getPlayers();
         System.out.println("Buffr");
