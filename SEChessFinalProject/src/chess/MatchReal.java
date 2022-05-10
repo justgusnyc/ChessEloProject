@@ -1,18 +1,51 @@
 package chess;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map.Entry;
+
 public class MatchReal {
+    static final List<Players> ALLPLAYERS = new ArrayList<>();
 
     // This is meant to encapsulate things about the match itself, and record what happens in the matches
 
     // right now some basic brackets are defined in the player class, but they should possibly be moved here
-	public void getPlayerStats(Players p){
-		int[] stats = p.getStats();
-		System.out.println("\nWins: " + stats[0] + " Losses: " + stats[1] + " Draws: " + stats[2] + "\n");
+	public List<Integer> getPlayerStats(Players p){
+		return p.getCurrentPlayerStats(p);
 	}
 	
-	public void getPlayers(Players p){
-		p.getPlayers();
-	}
+    public void addPlayerToTournament(Players p){
+        ALLPLAYERS.add(p);
+    }
+
+	public void getPlayerStatus(){
+		// this should return who is left in the current tournament, as people will get knocked out
+        // I was trying to think of a use case for all of the "is in game" logic, but the only reason
+        // we would care if they are still in the tournament, is to see whether they are knocked out 
+        // or not
+        List<String> leftInTournament = new ArrayList<>();
+        List<String> notInTournament = new ArrayList<>();
+
+        for(Players i : ALLPLAYERS){
+            if(i.isInGame()){
+                leftInTournament.add(i.getName());
+            }
+            else{
+                notInTournament.add(i.getName());
+            }
+
+        }
+
+        for(String k : notInTournament){
+            System.out.println("Knocked out of the tournament:"+"\t"+k);
+        }
+        for(String j : leftInTournament){
+            System.out.println("Still in the tournament:"+"\t"+j);
+        }
+
+        
+    }
+
 	
 	
 

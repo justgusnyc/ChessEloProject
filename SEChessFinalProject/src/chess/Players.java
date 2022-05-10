@@ -1,21 +1,30 @@
 package chess;
 
+import java.util.ArrayList;
 // import java.security.KeyStore.Entry;
-// import java.util.HashMap;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 
 public class Players extends ACPlayer{
+    private boolean inGame;
     private int elo;
     private String name;
-    private int[] stats;
-    //Map<String, Integer> ELONAMES = new HashMap<>();
+    private List<Integer> stats = new ArrayList<>();
+    
+    static final Map<String, List<Integer>> STATS1 = new HashMap<>();
 
     Players(String name, int elo){
         super(name, elo);
         this.name = name;
         this.elo = elo;
-        this.stats = new int[3];
+        this.stats = stats;
+        for(int i = 0; i < 3; i++){
+            this.stats.add(0);
+        }
+        STATS1.put(this.name, this.stats);
     }
 
     public void getPlayers(){  //Maybe this funtion needs to be somewhere else?
@@ -34,19 +43,31 @@ public class Players extends ACPlayer{
         return this.name;
     }
     
-    public int[] getStats(){
-    	return this.stats;
+    public void viewStats(){
+        for(Entry<String, List<Integer>> entry : STATS1.entrySet()){
+            String n = entry.getKey();
+            List<Integer> el = entry.getValue();
+            System.out.println("Name: "+n+ "\tStats(Wins,Losses,Draws): "+el);
+        }
+    }
+
+    public List<Integer> getCurrentPlayerStats(Players p){
+        return STATS1.get(p.getName());
     }
     
     public void addMatchStat(int input){
-    	if(input == 1){
-    		this.stats[0]++;
-    	}else if(input == 2){
-    		this.stats[1]++;
-    	}else if(input == 3){
-    		this.stats[2]++;
+        List<Integer> s = this.STATS1.get(this.name);
+    	if(input == 1){ // for win?
+    		int v = s.get(0);
+            s.add(0, v+1);
+    	}else if(input == 2){ // for loss?
+    		int v = s.get(1);
+            s.add(1, v+1);
+    	}else if(input == 3){ // for draw?
+    		int v = s.get(2);
+            s.add(2, v+1);
     	}else{
-    		System.out.println("Bruh");
+    		System.out.println("Bruh"); // lmao
     	}
     	
     }
@@ -59,6 +80,18 @@ public class Players extends ACPlayer{
         }
         ELONAMES.replace(name, elo);
     }
+
+	public void setInGame(){
+		this.inGame = true;
+	}
+
+	public void setNotInGame(){
+		this.inGame = false;
+	}
+
+	public boolean isInGame(){
+		return this.inGame;
+	}
 
 
 

@@ -80,7 +80,7 @@ public class MatchingAlgo{
             }
             else{
                 System.out.println("PlayerA Elo: "+playerA.getElo());
-                System.out.println("Entry Value: "+entry.getValue());
+                System.out.println("PlayerB Value: "+entry.getValue());
                 float currentPercentage = this.percPlayerAWin(playerA.getElo(), entry.getValue());
                 System.out.println("Current Percentage: "+currentPercentage);
                 scores.add(currentPercentage);
