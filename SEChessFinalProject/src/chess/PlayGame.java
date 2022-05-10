@@ -38,9 +38,12 @@ public class PlayGame {
                         System.out.println("Current Player White: "+p.getName()+"\n"); 
                         System.out.println("Current Player Black: "+nameBestMatch+"\n"); 
 
+
+                        // x1 = 1 for win, 2 for loss, 3 for draw
                         int x1 = ThreadLocalRandom.current().nextInt(1, 3 + 1);
                         System.out.println("\n");
                         if(x1 == 1){
+                            System.out.println("Win");
                             int kScore = ma.getKScore(p.getElo());
                             int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
                             int newElo = ma.newPlayerRating(p.getElo(), kScore, ma.currentPercentage, 1);
@@ -48,22 +51,23 @@ public class PlayGame {
                             System.out.println("The new elo: "+newElo);
                             p.updateElo(opponentElo - Math.abs(newElo - p.getElo()), nameBestMatch);
                             p.updateElo(newElo, p.getName());
-                            
-                            
+                            this.match.removePlayerFromTournament(nameBestMatch);
                         } 
     
                         else if (x1 == 2){
-                            int kScore = ma.getKScore(p.getElo());
+                            System.out.println("Loss");
                             int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
-                            int newElo = ma.newPlayerRating(p.getElo(), kScore, ma.currentPercentage, 0);
-    
+                            int kScore = ma.getKScore(opponentElo);
+                            int newElo = ma.newPlayerRating(opponentElo, kScore, ma.currentPercentage, 0);
+                            
                             System.out.println("The new elo: "+newElo);
-                            p.updateElo(opponentElo + Math.abs(newElo - p.getElo()), nameBestMatch);
-                            p.updateElo(newElo, p.getName()); 
-                            //
+                            p.updateElo(newElo, nameBestMatch);
+                            p.updateElo((p.getElo() - Math.abs(newElo - opponentElo)), p.getName()); 
+                            MatchReal.ALLPLAYERS.remove(p);
                         }
                         
                         else if (x1 == 3){
+                            System.out.println("Draw");
                             //DRAW FUNCTION
                             ;
                         }
@@ -71,11 +75,6 @@ public class PlayGame {
                     
                     // should we make it randomized as to who wins or loses?
                     // or should we allow the user to decide? Currently the user will decide
-                    
-                    // System.out.println("1) if you won the match: "); 
-                    // System.out.println("2) if you lost the match: "); 
-                    // System.out.println("3) if it was a draw: \n");
-                    // System.out.println("Your input: ");
                     
                     
 

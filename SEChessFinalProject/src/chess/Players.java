@@ -27,6 +27,11 @@ public class Players extends ACPlayer{
         STATS1.put(this.name, this.stats);
     }
 
+    @Override
+    public String toString(){
+        return this.name;
+    }
+
     public void getPlayers(){  //Maybe this funtion needs to be somewhere else?
         for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
             String n = entry.getKey();

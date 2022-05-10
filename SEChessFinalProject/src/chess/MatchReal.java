@@ -17,6 +17,13 @@ public class MatchReal {
     public void addPlayerToTournament(Players p){
         ALLPLAYERS.add(p);
     }
+    public void removePlayerFromTournament(String name){
+        for(Players p:ALLPLAYERS){
+            if(p.getName() == name){
+                ALLPLAYERS.remove(p);   
+            }
+        }
+    }
 
 	public void getPlayerStatus(){
 		// this should return who is left in the current tournament, as people will get knocked out

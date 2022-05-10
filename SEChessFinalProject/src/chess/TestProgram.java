@@ -1,5 +1,7 @@
 package chess;
 
+import java.util.Iterator;
+
 import chess.Players.Bracket;
 
 public class TestProgram{
@@ -36,6 +38,16 @@ public class TestProgram{
         System.out.println("Optimal First Match for Gus player: "+ MA.optimalMatch(G));
         play.beginTournament();
         V.getPlayers();
+        // Iterator iterator = MatchReal.ALLPLAYERS.iterator();
+        // System.out.println(MatchReal.ALLPLAYERS);
+        // System.out.println("Current Players: ");
+        // while(iterator.hasNext()){
+        //     System.out.println(iterator.next());
+        // }
+
+        // System.out.println(MatchReal.ALLPLAYERS.get(0).toString() == "Gus");
+        
+      
 
         
 
