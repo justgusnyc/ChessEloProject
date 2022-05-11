@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.Scanner;
 
 public class TestProgram{
     
@@ -13,6 +14,7 @@ public class TestProgram{
         Players N = new Players("Noah", 1000);
         Players A = new Players("Arthur", 950);
         Players D = new Players("David", 2000);
+        Players JO = new Players("Jorge", 2800);
    
         match.addPlayerToTournament(G);
         match.addPlayerToTournament(C);
@@ -21,21 +23,43 @@ public class TestProgram{
         match.addPlayerToTournament(A);
         match.addPlayerToTournament(D);
         match.addPlayerToTournament(J);
-
-        match.generatePlayers(50);
-
-
-        System.out.println("All Players and their Elo's before the tournament: ");
-        G.getPlayers();
+        match.addPlayerToTournament(JO);
         
-        // System.out.println(Bracket.lookup(C.getElo()));
-        
-        play.beginTournament();
-        
-        System.out.println("\n");
-        System.out.println("Players and their Elo's after the tournament: ");
-        V.getPlayers();
 
+
+
+       
+            try (Scanner s = new Scanner(System.in)) {
+                
+                System.out.println("Press 1 to begin tournament: ");
+                System.out.println("Press 2 to view all players and their Elo's: ");
+                System.out.println("Press 3 to exit: ");
+                System.out.print("Input: ");
+                int n = s.nextInt();
+                if(n == 1){
+                    System.out.println("How many players would you like to generate? ");
+                    System.out.print("Number of bots: ");
+                    int x = s.nextInt();
+                    match.generatePlayers(x);
+                    play.beginTournament();
+                }
+                if(n == 2){
+                    System.out.println("All Players and their Elo's: ");
+                    G.getPlayers();
+
+                }
+                else{
+                    System.out.println("Quitting...");
+                }
+            
+            }
+            
+            // System.out.println(Bracket.lookup(C.getElo()));
+    
+    
+
+        }
+        
         
       
 
@@ -44,4 +68,4 @@ public class TestProgram{
 
         
     }
-}
+
