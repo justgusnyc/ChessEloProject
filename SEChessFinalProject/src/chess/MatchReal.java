@@ -1,11 +1,14 @@
 package chess;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
+// import java.util.Map.Entry;
 
 public class MatchReal {
     static final List<Players> ALLPLAYERS = new ArrayList<>();
+    List<String> leftInTournament = new ArrayList<>();
+    List<String> notInTournament = new ArrayList<>();
 
     // This is meant to encapsulate things about the match itself, and record what happens in the matches
 
@@ -17,15 +20,25 @@ public class MatchReal {
     public void addPlayerToTournament(Players p){
         ALLPLAYERS.add(p);
     }
-    
 
-    public Players getPlayer(String name){
-        for(Players p:ALLPLAYERS){
-            if(p.getName() == name){
-                return p;
-            }
+    public Players getPlayerObject(String name){
+        for(Iterator<Players> p = ALLPLAYERS.iterator(); p.hasNext(); ){
+            Players player = p.next();
+            if(player.getName() == name){
+                return player;
+            } 
         }
         return null;
+    }
+    
+
+    public void deletePlayerFromAllPlayers(String name){
+        for(Iterator<Players> p = ALLPLAYERS.iterator(); p.hasNext(); ){
+            Players player = p.next();
+            if(player.getName() == name){
+                p.remove();
+            } 
+        }
     }
 
 	public void getPlayerStatus(){
@@ -33,8 +46,7 @@ public class MatchReal {
         // I was trying to think of a use case for all of the "is in game" logic, but the only reason
         // we would care if they are still in the tournament, is to see whether they are knocked out 
         // or not
-        List<String> leftInTournament = new ArrayList<>();
-        List<String> notInTournament = new ArrayList<>();
+        
 
         for(Players i : ALLPLAYERS){
             if(i.isInGame()){

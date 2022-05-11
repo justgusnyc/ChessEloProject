@@ -14,14 +14,9 @@ public class PlayGame {
     public void beginTournament(){
         try (Scanner s = new Scanner(System.in)) {
             boolean b = true;
+            // int sz = MatchReal.ALLPLAYERS.size();
 
-            while(b){
-            	
-//                System.out.println("Please select one of the options below: ");
-//                System.out.println("Enter 1 to match with a new opponent: ");
-//                System.out.println("Enter 2 to check your current stats: ");
-//                System.out.println("Enter 3 to see all players currently in the tournament: ");
-//                System.out.println("Enter 4 to quit game: ");
+            while(b){      
             	
             	System.out.println("Please enter 1-4: \n");
             	System.out.println("1) Begin Tournament ");
@@ -33,12 +28,24 @@ public class PlayGame {
                 
                 int x = s.nextInt();
                 if(x == 1){
+                    
                     while(MatchReal.ALLPLAYERS.size() != 1){
+                        System.out.println("Do I come here after the break?");
+        
                         for(Iterator<Players> p = MatchReal.ALLPLAYERS.iterator(); p.hasNext(); ){
+
                             Players play = p.next();
+                            if(play.isInGame() == false){
+                                p.remove();
+                                continue;
+                            }
                             System.out.println(MatchReal.ALLPLAYERS);
                             MatchingAlgo ma = new MatchingAlgo();
                             String nameBestMatch = ma.optimalMatch(play);
+                            Players opp = this.match.getPlayerObject(nameBestMatch);
+                            if(play.getName() == nameBestMatch){
+                                continue;
+                            }
                             System.out.println("Current Player White: "+play.getName()+"\n"); 
                             System.out.println("Current Player Black: "+nameBestMatch+"\n"); 
                             
@@ -50,14 +57,14 @@ public class PlayGame {
                                 System.out.println("Win");
                                 int kScore = ma.getKScore(play.getElo());
                                 int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
-                                int newElo = ma.newPlayerRating(play.getElo(), kScore, ma.currentPercentage, 1);
+                                int newElo = ma.newPlayerRating(play.getElo(), kScore, ma.percPlayerAWin(play.getElo(), opponentElo), 1);
                                 
-                                System.out.println("The new elo: "+newElo);
+                                System.out.println("The new elo of main player (white): "+newElo);
                                 play.updateElo(opponentElo - Math.abs(newElo - play.getElo()), nameBestMatch);
                                 play.updateElo(newElo, play.getName());
+                       
+                                opp.setNotInGame();
                                 
-                                // Players bye = this.match.getPlayer(nameBestMatch);
-                                p.remove();
                                 System.out.println(MatchReal.ALLPLAYERS);
                                 
                             } 
@@ -66,32 +73,46 @@ public class PlayGame {
                                 System.out.println("Loss");
                                 int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
                                 int kScore = ma.getKScore(opponentElo);
-                                int newElo = ma.newPlayerRating(opponentElo, kScore, ma.currentPercentage, 0);
+                                int newElo = ma.newPlayerRating(opponentElo, kScore, ma.percPlayerAWin(opponentElo, play.getElo()), 0);
                                 
-                                System.out.println("The new elo: "+newElo);
+                                System.out.println("The new elo of main player (white): "+(play.getElo() - Math.abs(newElo - opponentElo)));
                                 play.updateElo(newElo, nameBestMatch);
                                 play.updateElo((play.getElo() - Math.abs(newElo - opponentElo)), play.getName()); 
                                 p.remove();
-                                System.out.println(MatchReal.ALLPLAYERS);
+                                
                             }
                             
                             else if (x1 == 3){
                                 System.out.println("Draw");
+                                int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
+
                                 //DRAW FUNCTION
-                                ;
+                                int playerWDrawVal = ma.drawValue(play.getElo(), ma.percPlayerAWin(play.getElo(), opponentElo));
+                                int playerBDrawVal = ma.drawValue(opponentElo, ma.percPlayerAWin(opponentElo, play.getElo()));
+                                if(play.getElo() >= opponentElo){
+                                    System.out.println("Player white elo after draw: "+playerWDrawVal);
+                                    System.out.println("Player black elo after draw: "+playerBDrawVal);
+                                    play.updateElo((play.getElo() - Math.abs(opponentElo - playerBDrawVal)), play.getName());
+                                    play.updateElo(playerBDrawVal, nameBestMatch);
+                                    
+                                }
+                                else{
+                                    play.updateElo(playerWDrawVal, play.getName());
+                                    play.updateElo((opponentElo - Math.abs(play.getElo() - playerWDrawVal)), nameBestMatch);
+
+                                }
+
                             }
                             System.out.println(MatchReal.ALLPLAYERS);
                         }
+                        System.out.println("This is the winner!: "+MatchReal.ALLPLAYERS);
+
+
 
                     }
                     
                     
-                    // should we make it randomized as to who wins or loses?
-                    // or should we allow the user to decide? Currently the user will decide
                     
-                    
-                    
-                    // p.addMatchStat(x1);
                 }
                 else if(x == 2){
                 	// this.match.getPlayerStats(p);

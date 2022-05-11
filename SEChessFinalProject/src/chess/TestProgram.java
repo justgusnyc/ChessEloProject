@@ -1,6 +1,6 @@
 package chess;
 
-import java.util.Iterator;
+// import java.util.Iterator;
 
 import chess.Players.Bracket;
 

@@ -9,7 +9,7 @@ import java.util.Map.Entry;
 
 
 public class Players extends ACPlayer{
-    private boolean inGame;
+    private boolean inGame = true;
     private int elo;
     private String name;
     private List<Integer> stats = new ArrayList<>();
@@ -21,6 +21,7 @@ public class Players extends ACPlayer{
         this.name = name;
         this.elo = elo;
         this.stats = stats;
+        this.inGame = inGame;
         for(int i = 0; i < 3; i++){
             this.stats.add(0);
         }
@@ -61,7 +62,7 @@ public class Players extends ACPlayer{
     }
     
     public void addMatchStat(int input){
-        List<Integer> s = this.STATS1.get(this.name);
+        List<Integer> s = Players.STATS1.get(this.name);
     	if(input == 1){ // for win?
     		int v = s.get(0);
             s.add(0, v+1);
@@ -94,9 +95,9 @@ public class Players extends ACPlayer{
         ELONAMES.replace(name, elo);
     }
 
-	public void setInGame(){
-		this.inGame = true;
-	}
+	// public void setInGame(){
+	// 	this.inGame = true;
+	// }
 
 	public void setNotInGame(){
 		this.inGame = false;

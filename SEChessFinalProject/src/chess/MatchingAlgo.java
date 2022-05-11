@@ -1,8 +1,8 @@
 package chess;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+// import java.util.ArrayList;
+// import java.util.List;
+// import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 
@@ -50,8 +50,9 @@ public class MatchingAlgo{
         return newRating;
     }
 
-    public int drawValue(int currentElo, int kValue, float expectedWinPercentage){
-        return 0;
+    public int drawValue(int currentElo, float expectedWinPercentage){
+        int drawRating = currentElo + (int)(8 * (.05 - expectedWinPercentage));
+        return drawRating;
     }
     
     
@@ -72,28 +73,24 @@ public class MatchingAlgo{
     // figure out a way to store a list inside of a list or something like that
 
     public String optimalMatch(Players playerA){
-        List<Float> scores = new ArrayList<>(); 
+        // List<Float> scores = new ArrayList<>(); 
 
         for(Players p : MatchReal.ALLPLAYERS){
             
-
-            if(p == playerA){
-                continue;
-            }
-            else{
+            if(p.isInGame() && p != playerA){
                 System.out.println("PlayerA Elo: "+playerA.getElo());
                 System.out.println("PlayerB Value: "+p.getElo());
                 float currentPercentage = this.percPlayerAWin(playerA.getElo(), p.getElo());
                 System.out.println("Current Percentage: "+currentPercentage);
-                scores.add(currentPercentage);
+                // scores.add(currentPercentage);
                 if(currentPercentage == 0.5){
                     return p.getName();
                 }
                 else if(currentPercentage <= 0.63 && currentPercentage >= 0.38){
                     return p.getName();
                 }
-                
             }
+            
         }
         int x1 = ThreadLocalRandom.current().nextInt(0, MatchReal.ALLPLAYERS.size());
         return MatchReal.ALLPLAYERS.get(x1).getName();
