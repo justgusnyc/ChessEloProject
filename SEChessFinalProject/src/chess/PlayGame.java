@@ -43,11 +43,12 @@ public class PlayGame {
                             MatchingAlgo ma = new MatchingAlgo();
                             String nameBestMatch = ma.optimalMatch(play);
                             Players opp = this.match.getPlayerObject(nameBestMatch);
-                            if(play.getName() == nameBestMatch){
+                            if(play.getName() == nameBestMatch || opp.isInGame() == false){
                                 continue;
                             }
                             System.out.println("Current Player White: "+play.getName()+"\n"); 
                             System.out.println("Current Player Black: "+nameBestMatch+"\n"); 
+                            int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
                             
                             
                             // x1 = 1 for win, 2 for loss, 3 for draw
@@ -55,11 +56,13 @@ public class PlayGame {
                             System.out.println("\n");
                             if(x1 == 1){
                                 System.out.println("Win");
+                                System.out.println("Previous white elo: "+play.getElo());
                                 int kScore = ma.getKScore(play.getElo());
-                                int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
+                                System.out.println("Previous black elo: "+opponentElo);
                                 int newElo = ma.newPlayerRating(play.getElo(), kScore, ma.percPlayerAWin(play.getElo(), opponentElo), 1);
                                 
                                 System.out.println("The new elo of main player (white): "+newElo);
+                                System.out.println("The new elo of second player (black): "+(opponentElo - Math.abs(newElo - play.getElo())));
                                 play.updateElo(opponentElo - Math.abs(newElo - play.getElo()), nameBestMatch);
                                 play.updateElo(newElo, play.getName());
                        
@@ -71,11 +74,18 @@ public class PlayGame {
                             
                             else if (x1 == 2){
                                 System.out.println("Loss");
-                                int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
-                                int kScore = ma.getKScore(opponentElo);
-                                int newElo = ma.newPlayerRating(opponentElo, kScore, ma.percPlayerAWin(opponentElo, play.getElo()), 0);
                                 
-                                System.out.println("The new elo of main player (white): "+(play.getElo() - Math.abs(newElo - opponentElo)));
+                                
+                               
+                                System.out.println("Previous white elo: "+play.getElo());
+                                System.out.println("Previous black elo: "+opponentElo);
+                                int kScore = ma.getKScore(opponentElo);
+                                int newElo = ma.newPlayerRating(opponentElo, kScore, ma.percPlayerAWin(opponentElo, play.getElo()), 1);
+                                int difference = Math.abs(opponentElo - newElo);
+                                
+                                System.out.println("The new elo of the main character (white): "+(play.getElo() - difference));
+                                System.out.println("The new elo of secondary player (black): "+newElo);
+                                System.out.println("This is the elo difference for black winning: "+ difference);
                                 play.updateElo(newElo, nameBestMatch);
                                 play.updateElo((play.getElo() - Math.abs(newElo - opponentElo)), play.getName()); 
                                 p.remove();
@@ -84,21 +94,32 @@ public class PlayGame {
                             
                             else if (x1 == 3){
                                 System.out.println("Draw");
-                                int opponentElo = ACPlayer.ELONAMES.get(nameBestMatch);
+                               
 
                                 //DRAW FUNCTION
-                                int playerWDrawVal = ma.drawValue(play.getElo(), ma.percPlayerAWin(play.getElo(), opponentElo));
-                                int playerBDrawVal = ma.drawValue(opponentElo, ma.percPlayerAWin(opponentElo, play.getElo()));
+                                int playerWDrawVal = ma.drawValue(play.getElo(), ma.currentPercentage);
+                                // int playerBDrawVal = ma.drawValue(opponentElo, ma.percPlayerAWin(opponentElo, play.getElo()));
+                                int difference = Math.abs(play.getElo() - playerWDrawVal);
+                                System.out.print(difference);
+                                System.out.println("Previous white elo: "+play.getElo());
+                                System.out.println("Previous white elo: "+opponentElo);
                                 if(play.getElo() >= opponentElo){
                                     System.out.println("Player white elo after draw: "+playerWDrawVal);
-                                    System.out.println("Player black elo after draw: "+playerBDrawVal);
-                                    play.updateElo((play.getElo() - Math.abs(opponentElo - playerBDrawVal)), play.getName());
-                                    play.updateElo(playerBDrawVal, nameBestMatch);
+                                    // System.out.println("Player black elo after draw: "+playerBDrawVal);
+                                    System.out.println("Player white UPDATED elo after draw: "+(play.getElo() - difference));
+                                    System.out.println("Player black UPDATED elo after draw: "+ (opponentElo + difference));
+                                    play.updateElo((play.getElo() - difference), play.getName());
+                                    play.updateElo(opponentElo + difference, nameBestMatch);
                                     
                                 }
                                 else{
-                                    play.updateElo(playerWDrawVal, play.getName());
-                                    play.updateElo((opponentElo - Math.abs(play.getElo() - playerWDrawVal)), nameBestMatch);
+                                    System.out.println("In the play less than opponent statement");
+                                    System.out.println("Player white elo after draw: "+playerWDrawVal);
+                                    // System.out.println("Player black elo after draw: "+playerBDrawVal);
+                                    System.out.println("Player white UPDATED elo after draw: "+(play.getElo() + difference) );
+                                    System.out.println("Player black UPDATED elo after draw: "+ (opponentElo - difference));
+                                    play.updateElo((play.getElo() + difference), play.getName());
+                                    play.updateElo((opponentElo - difference), nameBestMatch);
 
                                 }
 

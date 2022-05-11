@@ -41,17 +41,21 @@ public class MatchingAlgo{
     public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB){
         float difference = Math.abs(ratingPlayerB - ratingPlayerA);
         float power = difference/400;
-        this.currentPercentage = (float) (1 / (1+(Math.pow(10,-power))));
-        return this.currentPercentage;
+        this.currentPercentage = (float) (1 / (1+(Math.pow(10,power))));
+        return (this.currentPercentage);
     }
 
     public int newPlayerRating(int currentElo, int kValue, float expectedWinPercentage, float actualWinPercentage){
         int newRating = currentElo + (int)(kValue * (actualWinPercentage - expectedWinPercentage));
+        System.out.println("Current elo: "+currentElo);
+        System.out.println("Actual win: "+actualWinPercentage);
+        System.out.println("Expected win: "+expectedWinPercentage);
+       
         return newRating;
     }
 
     public int drawValue(int currentElo, float expectedWinPercentage){
-        int drawRating = currentElo + (int)(8 * (.05 - expectedWinPercentage));
+        int drawRating = currentElo + (int)(5 * (.05 - expectedWinPercentage));
         return drawRating;
     }
     
@@ -59,9 +63,9 @@ public class MatchingAlgo{
 
     public int getKScore(int currentElo){
         if(currentElo >= 2400){
-            return 20;
+            return 10;
         }
-        return 30;
+        return 20;
     }
 
 

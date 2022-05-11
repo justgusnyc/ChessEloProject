@@ -17,6 +17,7 @@ public class TestProgram{
         Players N = new Players("Noah", 1000);
         Players A = new Players("Arthur", 950);
         Players D = new Players("David", 2000);
+   
         match.addPlayerToTournament(G);
         match.addPlayerToTournament(C);
         match.addPlayerToTournament(V);
