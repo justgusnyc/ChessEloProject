@@ -3,6 +3,7 @@ package chess;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 
 public class MatchReal implements IMatchReal{
@@ -59,6 +60,23 @@ public class MatchReal implements IMatchReal{
         }
 
         
+    }
+
+    public void generatePlayers(int n){
+
+        for(int i = 0; i < n; i++){
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException e) {
+                
+                e.printStackTrace();
+            }
+            
+            int randomPlayerElo = ThreadLocalRandom.current().nextInt(800, 2800);
+            String randomPlayer = "FakeGuy"+System.currentTimeMillis();
+            Players p = new Players(randomPlayer, randomPlayerElo);
+            this.addPlayerToTournament(p);
+        }
     }
 
 

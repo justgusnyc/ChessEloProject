@@ -27,14 +27,14 @@ public class Players extends ACPlayer implements IACPlayer{
 
     @Override
     public String toString(){
-        return this.name;
+        return this.name + " (Elo): " + this.elo;
     }
 
     public void getPlayers(){  
         for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
             String n = entry.getKey();
             Integer el = entry.getValue();
-            System.out.println("Name: "+n+ "\tValue: "+el);
+            System.out.println("Name: "+n+ "\t\tValue: "+el);
         }
     }
 

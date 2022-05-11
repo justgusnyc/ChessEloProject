@@ -22,6 +22,8 @@ public class TestProgram{
         match.addPlayerToTournament(D);
         match.addPlayerToTournament(J);
 
+        match.generatePlayers(50);
+
 
         System.out.println("All Players and their Elo's before the tournament: ");
         G.getPlayers();
