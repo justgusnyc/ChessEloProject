@@ -12,6 +12,9 @@ public class Players extends ACPlayer implements IACPlayer{
     private int elo;
     private String name;
     private List<Integer> stats = new ArrayList<>();
+    private int wins;
+ 
+    private int draws;
     
     static final Map<String, List<Integer>> STATS1 = new HashMap<>();
 
@@ -23,6 +26,10 @@ public class Players extends ACPlayer implements IACPlayer{
             this.stats.add(0);
         }
         STATS1.put(this.name, this.stats);
+
+        this.wins = 0;
+      
+        this.draws = 0;
     }
 
     @Override
@@ -54,22 +61,27 @@ public class Players extends ACPlayer implements IACPlayer{
         }
     }
 
-    public List<Integer> getCurrentPlayerStats(Players p){
-        return STATS1.get(p.getName());
+    public List<Integer> getCurrentPlayerStats(String name){
+        return STATS1.get(name);
+    }
+
+    public int getWins(){
+        return this.wins;
+    }
+   
+    public int getDraws(){
+        return this.draws;
     }
     
     public void addMatchStat(int input){
         List<Integer> s = Players.STATS1.get(this.name);
-    	if(input == 1){ // for win?
-    		int v = s.get(0);
-            s.add(0, v+1);
-    	}else if(input == 2){ // for loss?
-    		int v = s.get(1);
-            s.add(1, v+1);
-    	}else if(input == 3){ // for draw?
-    		int v = s.get(2);
-            s.add(2, v+1);
-    	}else{
+        s.toArray();
+    	if(input == 1){ 
+    		this.wins += 1;
+    	}else if(input == 2){ 
+    		this.draws += 1;
+    	}
+        else{
     		System.out.println("Invalid input");
     	}
     	

@@ -13,7 +13,7 @@ public class MatchReal implements IMatchReal{
 
 
 	public List<Integer> getPlayerStats(Players p){
-		return p.getCurrentPlayerStats(p); 
+		return p.getCurrentPlayerStats(p.getName()); 
 	}
 	
     public void addPlayerToTournament(Players p){
@@ -78,6 +78,8 @@ public class MatchReal implements IMatchReal{
             this.addPlayerToTournament(p);
         }
     }
+
+    
 
 
 

@@ -36,11 +36,11 @@ public class PlayGame implements IPlayGame {
 
                         String nameBestMatch = ma.optimalMatch(play);
                         Players opp = this.match.getPlayerObject(nameBestMatch);
-
+                        
                         if(play.getName() == nameBestMatch || opp.isInGame() == false){
                             continue;
                         }
-
+                        
                         System.out.println("\n"); 
                         System.out.println("----------------------------------------------------------------"); 
                         System.out.println("Current Player White: " + play.getName()+"\n"); 
@@ -67,6 +67,12 @@ public class PlayGame implements IPlayGame {
                             play.updateElo(newElo, play.getName());
                     
                             opp.setNotInGame();
+
+                            play.addMatchStat(1);
+                            opp.addMatchStat(2);
+
+                            System.out.println("White player "+"("+play.getName()+")"+" Amount of wins: "+play.getWins());
+                            System.out.println("White player "+"("+play.getName()+")"+" Amount of draws: "+play.getDraws());
                             
                         } 
                         
@@ -85,6 +91,13 @@ public class PlayGame implements IPlayGame {
                             
                             play.updateElo(newElo, nameBestMatch);
                             play.updateElo((play.getElo() - difference), play.getName()); 
+
+                            play.addMatchStat(2);
+                            opp.addMatchStat(1);
+                            
+                            System.out.println("White player "+"("+play.getName()+")"+" Amount of wins: "+play.getWins());
+                            System.out.println("White player "+"("+play.getName()+")"+" Amount of draws: "+play.getDraws());
+                            
                             p.remove();
                             
                         }
@@ -115,6 +128,12 @@ public class PlayGame implements IPlayGame {
                                 play.updateElo((opponentElo - difference), nameBestMatch);
 
                             }
+                            play.addMatchStat(3);
+                            opp.addMatchStat(3);
+                            
+                            System.out.println("White player "+"("+play.getName()+")"+" Amount of wins: "+play.getWins());
+                            System.out.println("White player "+"("+play.getName()+")"+" Amount of draws: "+play.getDraws());
+                            
 
                         }
 
@@ -129,14 +148,16 @@ public class PlayGame implements IPlayGame {
                 System.out.println("----------------------------------------------------------------");
 
                 b = false;
-                    
-                    
-                    
                 
+                
+                
+            }
+
+               
     
 
             }
         }
     }
     
-}
+

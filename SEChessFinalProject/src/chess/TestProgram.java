@@ -54,7 +54,6 @@ public class TestProgram{
             
             }
             
-            // System.out.println(Bracket.lookup(C.getElo()));
     
     
 
