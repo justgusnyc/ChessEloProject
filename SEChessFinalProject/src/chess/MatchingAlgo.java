@@ -1,24 +1,28 @@
 package chess;
 import java.util.concurrent.ThreadLocalRandom;
 
-// win = 1, lose = 0, draw = .5, if someone is slightly below you, maybe it would be .63 or something
-    // P(A wins) = 1 / (1+10^((RatingB - RatingA)/400))
 
-    // New Rating = rating + 32(score - expected score)
-    // New Rating example:
-    // Player A = 1656
-    // Player B = 1763
-    // (New Rating Player A) -> 1677 = 1656 + 32(1 - 0.35)
-    // the actual score was 1 because they won, and the expected score was .35, since
-    // the other player was slightly higher rated
 
-    // In reality, we would take the change in rating that the player was going to experience
-    // in its raw form, and then using "k" values, we would skew the result in a certain way depending on
-    // this is a different way of doing it where it would not be a fixed value of 32, but a range of values
-    // for "K" instead
-    // Ex: USCF official K value for a 2100 rated player would be 21 instead, because at such
-    // a high rating, because intense volatility is not fair as it is much harder to gain points
-    // at a higher level than it is at a lower level iuiuh
+/**
+
+     * MATH FOR MATCHING ALGORITHM
+     * .win = 1, lose = 0, draw = .5, if someone is slightly below you, maybe it would be .63 or something
+        P(A wins) = 1 / (1+10^((RatingB - RatingA)/400))
+
+        New Rating = rating + kValue(score - expected score)
+        New Rating example:
+        Player A = 1656
+        Player B = 1763
+        (New Rating Player A) -> 1677 = 1656 + kValue(1 - 0.35)
+        the actual score was 1 because they won, and the expected score was .35, since
+        the other player was slightly higher rated
+
+     *
+     * 
+
+     */
+
+
 
 
 
@@ -32,6 +36,21 @@ public class MatchingAlgo implements IMatchingAlgo{
     }
 
 
+    /**
+
+     * percPlayerAWin
+
+     * @param ratingPlayerA - Rating of player A (white).
+     * 
+     * 
+     * @param ratingPlayerB - Rating of player B (black)
+     * .
+     * 
+
+     * @return The percentage of likeliness that player A wins.
+     * 
+
+     */
     public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB){
         float difference = Math.abs(ratingPlayerB - ratingPlayerA);
         float power = difference/400;
@@ -39,10 +58,43 @@ public class MatchingAlgo implements IMatchingAlgo{
         return (this.currentPercentage);
     }
 
+
+    /**
+        newPlayerRating
+     * 
+
+     * @param currentElo - Current elo of player.
+     * @param kValue - The factor by which we multiple our percentage in a way.
+     * @param expectedWinPercentage - Percentage likeliness to win estimated.
+     * @param actualWinPercentage - Whether you actually won (0 - lost, 1 - won, .5 - draw)
+     * .
+     * 
+
+     * @return New rating of player.
+     * 
+
+     */
+
     public int newPlayerRating(int currentElo, int kValue, float expectedWinPercentage, float actualWinPercentage){
         int newRating = currentElo + (int)(kValue * (actualWinPercentage - expectedWinPercentage));
         return newRating;
     }
+
+    /**
+
+     * drawValue
+
+     * @param currentElo - Current elo of player.
+     * 
+     * 
+     * @param expectedWinPercentage - Expected percentage to win against opponent.
+     * .
+     * 
+
+     * @return What your rating will be for a draw.
+     * 
+
+     */
 
     public int drawValue(int currentElo, float expectedWinPercentage){
         int drawRating = currentElo + (int)(5 * (.05 - expectedWinPercentage));
@@ -50,6 +102,20 @@ public class MatchingAlgo implements IMatchingAlgo{
     }
     
     
+    /**
+
+     * getKScore
+
+     * @param currentElo - Current elo of player.
+     * 
+     * 
+     * .
+     * 
+
+     * @return What the factor for rating change will be.
+     * 
+
+     */
 
     public int getKScore(int currentElo){
         if(currentElo >= 2400){
@@ -57,6 +123,22 @@ public class MatchingAlgo implements IMatchingAlgo{
         }
         return 20;
     }
+
+
+    /**
+
+     * optimalMatch
+
+     * @param playerA - Player you would like to match.
+     * 
+     * 
+     * .
+     * 
+
+     * @return The name of your best matched opponent.
+     * 
+
+     */
 
     public String optimalMatch(Players playerA){
 

@@ -12,14 +12,47 @@ public class MatchReal implements IMatchReal{
     List<String> notInTournament = new ArrayList<>();
 
 
+    /**
+
+     * getPlayerStats
+     * .
+     * @param p - A player you would like to get the stats of.
+
+     * @return Returns the stats of the player.
+     * 
+
+     */
 	public List<Integer> getPlayerStats(Players p){
 		return p.getCurrentPlayerStats(p.getName()); 
 	}
 	
+
+    /**
+
+     * addPlayerToTournament
+     * .
+     * @param p - Player you would like to add to the tournament
+
+     * @return void - adds player.
+     * 
+
+     */
     public void addPlayerToTournament(Players p){
         ALLPLAYERS.add(p);
     }
 
+
+    /**
+
+     * getCurrentPlayerStats
+     * .
+     * @param name - The string name of the player you want to get player
+     * object of
+
+     * @return Returns the player object correlated to that name.
+     * 
+
+     */
     public Players getPlayerObject(String name){
         for(Iterator<Players> p = ALLPLAYERS.iterator(); p.hasNext(); ){
             Players player = p.next();
@@ -31,6 +64,17 @@ public class MatchReal implements IMatchReal{
     }
     
 
+    /**
+
+     * deletePlayerFromAllPlayers
+     * .
+     * @param name - The string name of the player you want to delete from
+     * ALLPLAYERS
+
+     * @return Returns the set of stats from a specific player.
+     * 
+
+     */
     public void deletePlayerFromAllPlayers(String name){
         for(Iterator<Players> p = ALLPLAYERS.iterator(); p.hasNext(); ){
             Players player = p.next();
@@ -40,6 +84,16 @@ public class MatchReal implements IMatchReal{
         }
     }
 
+    /**
+
+     * getPlayerStatus
+     * .
+
+     * @return void - prints who is still in the tournament now
+     * and who is not.
+     * 
+
+     */
 	public void getPlayerStatus(){
         
         for(Players i : ALLPLAYERS){
@@ -62,6 +116,16 @@ public class MatchReal implements IMatchReal{
         
     }
 
+    /**
+
+     * generatePlayers
+     * .
+     * @param n - The number of players you would like to generate.
+
+     * @return void - generate those players and adds them to tournament.
+     * 
+
+     */
     public void generatePlayers(int n){
 
         for(int i = 0; i < n; i++){

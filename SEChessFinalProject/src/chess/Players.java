@@ -18,6 +18,8 @@ public class Players extends ACPlayer implements IACPlayer{
     
     static final Map<String, List<Integer>> STATS1 = new HashMap<>();
 
+    
+
     Players(String name, int elo){
         super(name, elo);
         this.name = name;
@@ -37,6 +39,20 @@ public class Players extends ACPlayer implements IACPlayer{
         return this.name + " (Elo): " + this.elo;
     }
 
+    /**
+
+     * getPlayers
+
+     * 
+     * 
+     * .
+     * 
+
+     * @return Returns the name and elo pair of every player.
+     * 
+
+     */
+
     public void getPlayers(){  
         for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
             String n = entry.getKey();
@@ -45,14 +61,48 @@ public class Players extends ACPlayer implements IACPlayer{
         }
     }
 
+
+    /**
+
+     * getElo
+
+     * .
+     * 
+
+     * @return Returns current players elo.
+     * 
+
+     */
     public int getElo(){
         return this.elo;
     }
 
+
+    /**
+
+     * getName
+
+     * .
+     * 
+
+     * @return Returns current players name.
+     * 
+
+     */
     public String getName(){
         return this.name;
     }
     
+    /**
+
+     * viewStats
+     * .
+     * 
+
+     * @return Shows the stats of a player.
+     * 
+
+     */
     public void viewStats(){
         for(Entry<String, List<Integer>> entry : STATS1.entrySet()){
             String n = entry.getKey();
@@ -61,18 +111,59 @@ public class Players extends ACPlayer implements IACPlayer{
         }
     }
 
+    /**
+
+     * getCurrentPlayerStats
+     * .
+     * @param name - The string name of the player you want to get stats of
+
+     * @return Returns the set of stats from a specific player.
+     * 
+
+     */
     public List<Integer> getCurrentPlayerStats(String name){
         return STATS1.get(name);
     }
 
+    /**
+
+     * getWins
+     * .
+
+     * @return Returns the amount of wins the player has.
+     * 
+
+     */
     public int getWins(){
         return this.wins;
     }
    
+
+    /**
+
+     * getDraws
+     * .
+
+     * @return Returns the number of draws the player has.
+     * 
+
+     */
     public int getDraws(){
         return this.draws;
     }
     
+
+    /**
+
+     * getCurrentPlayerStats
+     * .
+     * @param input - The value (1-2) that designates whether 
+     * you would like to add to the win count or the draw count.
+
+     * @return void.
+     * 
+
+     */
     public void addMatchStat(int input){
         List<Integer> s = Players.STATS1.get(this.name);
         s.toArray();
@@ -87,6 +178,15 @@ public class Players extends ACPlayer implements IACPlayer{
     	
     }
 
+    /**
+
+     * remove
+     * .
+
+     * @return Removes player from ALLPLAYERS.
+     * 
+
+     */
     public void remove(){
         for(Players p:MatchReal.ALLPLAYERS){
             if(this.name == p.getName()){
@@ -95,6 +195,18 @@ public class Players extends ACPlayer implements IACPlayer{
         }
     }
 
+
+    /**
+
+     * updateElo
+     * .
+     * @param name - The elo you would like to assign to the player.
+     * @param name - The string name of the player you want to update the elo of
+
+     * @return void - updates the elos
+     * 
+
+     */
     public void updateElo(int elo, String name){
         if(name == this.name){
             this.elo = elo;
@@ -102,10 +214,29 @@ public class Players extends ACPlayer implements IACPlayer{
         ELONAMES.replace(name, elo);
     }
 
+    /**
+
+     * setNotInGame
+     * .
+
+     * @return Sets the player to not be in the tournament.
+     * 
+
+     */
 	public void setNotInGame(){
 		this.inGame = false;
 	}
 
+
+    /**
+
+     * isInGame
+     * .
+
+     * @return Returns whether the player is in game or not.
+     * 
+
+     */
 	public boolean isInGame(){
 		return this.inGame;
 	}
@@ -113,6 +244,16 @@ public class Players extends ACPlayer implements IACPlayer{
 
 
 
+    /**
+
+     * Bracket enum
+     * .
+     * @param value - Elo of player you'd like to place
+
+     * @return Returns the bracket that player is in.
+     * 
+
+     */
     public enum Bracket {
         
         BEGINNER(800),
@@ -133,13 +274,14 @@ public class Players extends ACPlayer implements IACPlayer{
         }
     
         /**
+           we are taking the middle as the root of what we are looking for and 
+           checking if there is a different value to our left and right
          * @param v
          *        the value we're looking for
          * @return Bracket
          */
 
          
-         // we are taking the middle as the root of what we are looking for and checking if there is a different value to our left and right
         
         public static Bracket lookup(final int v) {
             final Bracket[] a = Bracket.values();

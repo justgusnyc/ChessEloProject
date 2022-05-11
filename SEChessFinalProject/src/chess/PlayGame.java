@@ -11,6 +11,17 @@ public class PlayGame implements IPlayGame {
     	this.match = new MatchReal();
     }
 
+    /**
+
+     * beginTournament
+     * .
+
+     * @return void - begins the tournaments and has everyone face each other leaving 
+     * only one winner!
+     * 
+
+     */
+
     public void beginTournament(){
         try (Scanner s = new Scanner(System.in)) {
             boolean b = true;
