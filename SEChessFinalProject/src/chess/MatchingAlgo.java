@@ -1,24 +1,7 @@
 package chess;
-
-// import java.util.ArrayList;
-// import java.util.List;
-// import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-
-
-public class MatchingAlgo{
-    public float currentPercentage;
-
-
-    MatchingAlgo() {
-        this.currentPercentage = currentPercentage;
-    }
-
-
-
-
-    // win = 1, lose = 0, draw = .5, if someone is slightly below you, maybe it would be .63 or something
+// win = 1, lose = 0, draw = .5, if someone is slightly below you, maybe it would be .63 or something
     // P(A wins) = 1 / (1+10^((RatingB - RatingA)/400))
 
     // New Rating = rating + 32(score - expected score)
@@ -38,6 +21,17 @@ public class MatchingAlgo{
     // at a higher level than it is at a lower level iuiuh
 
 
+
+
+public class MatchingAlgo implements IMatchingAlgo{
+    public float currentPercentage;
+
+
+    MatchingAlgo() {
+        
+    }
+
+
     public float percPlayerAWin(int ratingPlayerA, int ratingPlayerB){
         float difference = Math.abs(ratingPlayerB - ratingPlayerA);
         float power = difference/400;
@@ -47,10 +41,6 @@ public class MatchingAlgo{
 
     public int newPlayerRating(int currentElo, int kValue, float expectedWinPercentage, float actualWinPercentage){
         int newRating = currentElo + (int)(kValue * (actualWinPercentage - expectedWinPercentage));
-        System.out.println("Current elo: "+currentElo);
-        System.out.println("Actual win: "+actualWinPercentage);
-        System.out.println("Expected win: "+expectedWinPercentage);
-       
         return newRating;
     }
 
@@ -68,25 +58,17 @@ public class MatchingAlgo{
         return 20;
     }
 
-
-    // not sure if I should return type string below and just return the name of the first best match
-    // or if i should return type Players and return an entire Player for the best match.
-    // Either way I would ideally like to have a list of "best matches" sorted for the person we are currently 
-    // searching for, so that if the first match does not work out it would just go to the next match and so on
-    // the issue with this is that then I may need to change the datastructure of scores below to a hashmap or 
-    // figure out a way to store a list inside of a list or something like that
-
     public String optimalMatch(Players playerA){
-        // List<Float> scores = new ArrayList<>(); 
 
         for(Players p : MatchReal.ALLPLAYERS){
             
             if(p.isInGame() && p != playerA){
-                System.out.println("PlayerA Elo: "+playerA.getElo());
-                System.out.println("PlayerB Value: "+p.getElo());
                 float currentPercentage = this.percPlayerAWin(playerA.getElo(), p.getElo());
-                System.out.println("Current Percentage: "+currentPercentage);
-                // scores.add(currentPercentage);
+                System.out.println("Matching Process... ");
+                System.out.println("Player White (Current) Elo: " + playerA.getElo());
+                System.out.println("Possible Match Elo: " + p.getElo());
+                System.out.println("Current Percentage Chance of Player White to Win: " + currentPercentage);
+                
                 if(currentPercentage == 0.5){
                     return p.getName();
                 }
@@ -96,8 +78,9 @@ public class MatchingAlgo{
             }
             
         }
-        int x1 = ThreadLocalRandom.current().nextInt(0, MatchReal.ALLPLAYERS.size());
-        return MatchReal.ALLPLAYERS.get(x1).getName();
+        System.out.println("\n");
+        int randomPlayer = ThreadLocalRandom.current().nextInt(0, MatchReal.ALLPLAYERS.size());
+        return MatchReal.ALLPLAYERS.get(randomPlayer).getName();
         
         
 

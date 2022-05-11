@@ -1,14 +1,13 @@
 package chess;
 
 import java.util.ArrayList;
-// import java.security.KeyStore.Entry;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
 
-public class Players extends ACPlayer{
+public class Players extends ACPlayer implements IACPlayer{
     private boolean inGame = true;
     private int elo;
     private String name;
@@ -20,8 +19,6 @@ public class Players extends ACPlayer{
         super(name, elo);
         this.name = name;
         this.elo = elo;
-        this.stats = stats;
-        this.inGame = inGame;
         for(int i = 0; i < 3; i++){
             this.stats.add(0);
         }
@@ -33,7 +30,7 @@ public class Players extends ACPlayer{
         return this.name;
     }
 
-    public void getPlayers(){  //Maybe this funtion needs to be somewhere else?
+    public void getPlayers(){  
         for(Map.Entry<String, Integer> entry : ELONAMES.entrySet()){
             String n = entry.getKey();
             Integer el = entry.getValue();
@@ -86,18 +83,12 @@ public class Players extends ACPlayer{
         }
     }
 
-
-
     public void updateElo(int elo, String name){
         if(name == this.name){
             this.elo = elo;
         }
         ELONAMES.replace(name, elo);
     }
-
-	// public void setInGame(){
-	// 	this.inGame = true;
-	// }
 
 	public void setNotInGame(){
 		this.inGame = false;
@@ -110,12 +101,6 @@ public class Players extends ACPlayer{
 
 
 
-
-
-
-
-
-    
     public enum Bracket {
         
         BEGINNER(800),

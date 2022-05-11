@@ -1,13 +1,9 @@
 package chess;
 
-// import java.util.Iterator;
-
-import chess.Players.Bracket;
 
 public class TestProgram{
     
     public static void main(String[] args) {
-        MatchingAlgo MA = new MatchingAlgo();
         PlayGame play = new PlayGame();
         MatchReal match = new MatchReal();
         Players G = new Players("Gus", 1000);
@@ -27,30 +23,17 @@ public class TestProgram{
         match.addPlayerToTournament(J);
 
 
-    
+        System.out.println("All Players and their Elo's before the tournament: ");
         G.getPlayers();
-        System.out.println("Buffr");
-        C.getPlayers();
-
         
-
-        Bracket beg = Bracket.BEGINNER;
-
-        System.out.println(beg);
-        System.out.println(beg.getValue());
-        System.out.println(Bracket.lookup(G.getElo()));
-        System.out.println(Bracket.lookup(C.getElo()));
-        System.out.println("Optimal First Match for Gus player: "+ MA.optimalMatch(G));
+        // System.out.println(Bracket.lookup(C.getElo()));
+        
         play.beginTournament();
+        
+        System.out.println("\n");
+        System.out.println("Players and their Elo's after the tournament: ");
         V.getPlayers();
-        // Iterator iterator = MatchReal.ALLPLAYERS.iterator();
-        // System.out.println(MatchReal.ALLPLAYERS);
-        // System.out.println("Current Players: ");
-        // while(iterator.hasNext()){
-        //     System.out.println(iterator.next());
-        // }
 
-        // System.out.println(MatchReal.ALLPLAYERS.get(0).toString() == "Gus");
         
       
 
